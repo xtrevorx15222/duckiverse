@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#eadcf8">
+<title>Duckiverse — Duck of the Day</title>
+<style>
+:root{font-family:ui-rounded,"Trebuchet MS",system-ui,sans-serif;color:#49355b;background:transparent}
+*{box-sizing:border-box}body{margin:0;padding:12px;background:transparent}
+.shell{max-width:860px;margin:auto;border:3px solid #d9b8ee;border-radius:25px;overflow:hidden;background:linear-gradient(155deg,#fdf7ff,#f9edff 55%,#fff4dc);box-shadow:0 7px 22px #6b438224}
+header{background:#e7cdf7;padding:12px 18px;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.brand{font-size:clamp(18px,3vw,29px);font-weight:900}.date{font-size:12px;font-weight:700}
+main{padding:15px;display:grid;grid-template-columns:minmax(120px,0.8fr) minmax(180px,1.5fr);gap:14px;align-items:center}
+.portrait{background:radial-gradient(circle,#fff9c8,#eedbfa);border-radius:22px;padding:12px;display:grid;place-items:center;min-height:190px}
+.duck{width:min(100%,210px);height:auto;filter:drop-shadow(0 8px 5px #7c539c22)}
+.kicker{font-size:11px;font-weight:900;letter-spacing:1px;color:#9360ae;text-transform:uppercase}
+h1{font-size:clamp(19px,3.5vw,34px);line-height:1.1;margin:6px 0}h2{font-size:clamp(14px,2.2vw,19px);margin:8px 0}
+p{font-size:clamp(13px,1.8vw,17px);line-height:1.48;margin:8px 0}
+.clue{background:#fff;border:2px dashed #d6b1eb;border-radius:14px;padding:10px;margin-top:10px;font-size:clamp(12px,1.7vw,15px);font-weight:700}
+footer{padding:10px 15px;background:#f1e4fa;text-align:center;font-size:12px;font-weight:700}
+.pill{background:#fff5bb;border-radius:30px;padding:5px 9px;display:inline-block;font-size:11px;font-weight:800}
+@media(max-width:420px){body{padding:3px}main{grid-template-columns:1fr;gap:4px;padding:10px}.portrait{min-height:110px;padding:4px}.duck{width:118px}header{padding:10px}.clue{margin-top:6px}p{font-size:14px}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header><span class="brand">🦆 The Duckiverse</span><span class="date" id="date">Waddlewood Village</span></header>
+<main>
+<div class="portrait"><svg class="duck" viewBox="0 0 260 245" role="img" aria-label="Illustrated rubber duck character">
+<ellipse cx="126" cy="219" rx="92" ry="13" fill="#a67dbb" opacity=".2"/>
+<ellipse cx="140" cy="151" rx="103" ry="70" fill="#ffcf48" stroke="#e6a52e" stroke-width="4"/>
+<ellipse cx="91" cy="83" rx="66" ry="69" fill="#ffdc65" stroke="#e6a52e" stroke-width="4"/>
+<ellipse cx="183" cy="163" rx="42" ry="29" fill="#ffe58a" stroke="#e6a52e" stroke-width="3"/>
+<circle cx="65" cy="76" r="6" fill="#3b2944"/><circle cx="113" cy="76" r="6" fill="#3b2944"/>
+<path d="M52 101 Q88 91 123 103 Q89 130 52 108Z" fill="#f28b43" stroke="#d56c31" stroke-width="3"/>
+<ellipse cx="48" cy="92" rx="12" ry="7" fill="#ffa0a0" opacity=".6"/>
+<g id="hat"></g><g id="accessory"></g>
+</svg></div>
+<div class="story">
+<div class="kicker" id="episode">Duck of the Day</div>
+<h1 id="name">Professor Quackington</h1>
+<div class="pill" id="role">Wizard of Waddlewood</div>
+<h2 id="title">The Mysterious Purple Egg</h2>
+<p id="text">The adventure is loading!</p>
+<div class="clue" id="clue">🔎 Today's clue is coming...</div>
+</div>
+</main>
+<footer>💜 “We don't have a duck problem. We have a duck opportunity.”</footer>
+</div>
+<script>
+"use strict";
+// The first four story weeks begin Monday, November 2, 2026.
+// After week 4 the episodes repeat until new stories are added.
+const CAST = [
+{name:"Professor Quackington",role:"Wizard of Waddlewood",hat:"wizard"},
+{name:"Princess Sparklequack",role:"Royal Scientist",hat:"crown"},
+{name:"Captain Quackbeard",role:"Treasure Hunter",hat:"pirate"},
+{name:"Dr. Waddles",role:"Chief Inventor",hat:"science"},
+{name:"Nova Starquack",role:"Newest Duckling",hat:"star"}
+];
+const WEEKS = [
+{theme:"The Mystery of the Purple Egg",days:[
+[0,"The Mysterious Purple Egg","Outside his wizard tower, Professor Quackington discovers a sparkling purple egg. He taps it with his wand. WIGGLE! The egg says QUACK!","A tiny rainbow appears on the shell."],
+[1,"The Royal Investigation","Princess Sparklequack examines the egg with her glitter-powered magnifying glass. Tiny footprints surround it, but no one knows who made them.","The footprints glow when somebody laughs."],
+[2,"The Treasure Hunt","Captain Quackbeard insists the egg is legendary treasure. His map leads to a secret cave, where he finds a golden feather.","The feather plays music when touched."],
+[3,"The Egg Scanner 3000","Dr. Waddles builds a scanner. It accidentally makes popcorn! Before switching off, the screen flashes: FRIENDSHIP. MAGIC. TOMORROW.","The egg begins to glow."],
+[4,"Welcome, Little Nova!","CRACK! A lavender duckling with golden stars on her wings hatches. 'Where are my friends?' asks Nova Starquack. The Quack Squad cheers!","Friday surprise: Nova joins Waddlewood Village!"]
+]},
+{theme:"The Rainbow Castle",days:[
+[4,"A Rainbow Invitation","Nova finds a tiny rainbow envelope at her doorstep. Inside is an invitation to the Rainbow Castle, signed only with a golden star.","The invitation smells like strawberries."],
+[0,"The Bridge That Giggles","Professor Quackington tries to cross the castle bridge, but it giggles and disappears whenever someone frowns. A silly dance brings it back.","The bridge loves happy sounds."],
+[1,"The Missing Color","Princess Sparklequack notices the castle rainbow is missing its purple stripe! She checks every room and finds a trail of glitter.","The glitter leads toward the library."],
+[2,"A Pirate in the Library","Captain Quackbeard discovers a purple ribbon being used as a bookmark. He returns it to the rainbow, but the castle doors still won't open.","A small voice whispers, 'One more thing!'"],
+[3,"The Castle's Secret","Dr. Waddles learns the castle needs one thing more than colors: friends working together. Everyone holds wings, and the doors open to a giant rainbow party!","Friday surprise: Every duck gets a rainbow friendship badge!"]
+]},
+{theme:"The Moonlight Rocket",days:[
+[3,"The Rocket in the Shed","Dr. Waddles unveils his newest invention: the Waddle Rocket! Nova presses a purple button, and the countdown begins unexpectedly.","The rocket's map shows a smiling moon."],
+[4,"Nova's Star Map","Nova discovers she can read the star map! She points to a tiny blinking light and asks whether anyone lives there.","The blinking light seems to wave."],
+[2,"Captain of the Stars","Captain Quackbeard takes charge of the rocket snacks. He packs seventeen crackers, three maps, and one very confused rubber boot.","A message arrives: 'Bring your best joke.'"],
+[0,"A Spell for Landing","Professor Quackington uses a gentle floating spell to help the rocket land. Everyone practices their silliest moon walk.","Someone is laughing behind a moon rock."],
+[1,"The Moon's Surprise Guest","Princess Sparklequack finds a friendly moon duck named Luna-Lou, who invited them to the moon for a starlight picnic!","Friday surprise: Luna-Lou promises to visit Waddlewood soon!"]
+]},
+{theme:"The Great Snack Mystery",days:[
+[2,"The Vanishing Crackers","Captain Quackbeard discovers the snack cupboard is empty! Only a trail of crumbs remains. He declares an official pirate investigation.","The crumbs are shaped like stars."],
+[1,"A Glittery Trail","Princess Sparklequack follows the crumbs through the garden and spots glitter near the mushroom path.","Someone has been carrying a tiny picnic basket."],
+[4,"Nova's Big Discovery","Nova hears a rustle behind a flowerpot. She peeks around the corner and sees a tiny note: 'Meet me Friday!'","The note has a moon-shaped stamp."],
+[3,"The Snack Detector","Dr. Waddles builds a snack detector. It beeps at every cupboard, every pocket, and even his own lunch. Finally, it points toward the treehouse.","The treehouse lights are on."],
+[0,"A Surprise Picnic","Professor Quackington opens the treehouse door. Luna-Lou has prepared a surprise picnic for the whole Quack Squad! The missing snacks were party supplies.","Friday surprise: A new friendship picnic tradition begins!"]
+]}
+];
+const WEEKEND = [
+{title:"Saturday Duck Club",text:"The Quack Squad is resting after a busy week. What was your favorite clue? Tell someone your favorite part!",clue:"💜 Come back Monday for the next adventure."},
+{title:"Sunday Storytime",text:"Waddlewood is getting ready for another mystery. Make your best duck noise and imagine where our friends might go next!",clue:"🌈 A new chapter starts tomorrow!"}
+];
+function partsInEastern(){
+ const parts=new Intl.DateTimeFormat("en-US",{timeZone:"America/New_York",year:"numeric",month:"2-digit",day:"2-digit",weekday:"long"}).formatToParts(new Date());
+ return Object.fromEntries(parts.map(p=>[p.type,p.value]));
+}
+function choose(){
+ const p=partsInEastern();
+ const y=+p.year,m=+p.month,d=+p.day;
+ const day=Math.floor((Date.UTC(y,m-1,d)-Date.UTC(2026,10,2))/86400000);
+ const weekday=(new Date(Date.UTC(y,m-1,d)).getUTCDay()+6)%7;
+ const weekIndex=((Math.floor(day/7)%WEEKS.length)+WEEKS.length)%WEEKS.length;
+ const week=WEEKS[weekIndex];
+ let data,theme=week.theme;
+ if(weekday<5){data=week.days[weekday];}
+ else {const recap=WEEKEND[weekday-5];data=[weekday===5?2:4,recap.title,recap.text,recap.clue];theme="Weekend at Waddlewood";}
+ return {data,theme,dayLabel:p.weekday+" · "+m+"/"+d+"/"+y,weekday,weekIndex};
+}
+function dress(type){
+ const hat=document.getElementById("hat");
+ const acc=document.getElementById("accessory");
+ const shapes={
+ wizard:'<path d="M35 39 L89 -16 L139 39Z" fill="#7d52bf" stroke="#573388" stroke-width="4"/><ellipse cx="87" cy="39" rx="59" ry="12" fill="#8655c9"/><text x="82" y="18" font-size="22" fill="#ffdc68">★</text>',
+ crown:'<path d="M33 37 L38 0 L65 19 L88 -8 L110 19 L138 0 L143 37Z" fill="#ff96cb" stroke="#bf5899" stroke-width="4"/><circle cx="88" cy="24" r="8" fill="#a968db"/>',
+ pirate:'<path d="M22 38 Q46 -14 86 16 Q126 -14 155 38 Q89 57 22 38Z" fill="#3e304d"/><path d="M46 40 L127 40" stroke="#fff" stroke-width="5"/><text x="78" y="31" fill="white" font-size="19">★</text>',
+ science:'<path d="M30 41 L45 9 L127 9 L145 41" fill="#e7f4ff" stroke="#679bb0" stroke-width="5"/><rect x="48" y="23" width="34" height="22" rx="8" fill="none" stroke="#4b7391" stroke-width="5"/><rect x="92" y="23" width="34" height="22" rx="8" fill="none" stroke="#4b7391" stroke-width="5"/><path d="M82 31 L92 31" stroke="#4b7391" stroke-width="4"/>',
+ star:'<path d="M89 0 L99 21 L123 23 L105 40 L110 62 L89 51 L67 62 L72 40 L54 23 L78 21Z" fill="#d99af3" stroke="#ad69d4" stroke-width="3"/>'
+ };
+ hat.innerHTML=shapes[type]||"";
+ acc.innerHTML=type==="wizard"?'<path d="M178 75 L226 22" stroke="#9b6b41" stroke-width="7"/><text x="220" y="27" font-size="25" fill="#f6bd4b">✦</text>':type==="science"?'<path d="M196 137 L215 105 L225 144Z" fill="#b785d9" stroke="#8758ac" stroke-width="3"/>':type==="star"?'<text x="182" y="128" font-size="24" fill="#ad75da">✦</text>':"";
+}
+let lastKey="";
+function render(){
+ const item=choose(), [castIndex,title,story,clue]=item.data;
+ const key=item.dayLabel+"-"+item.weekIndex;
+ if(key===lastKey)return;
+ lastKey=key;
+ const duck=CAST[castIndex];
+ document.getElementById("date").textContent=item.dayLabel;
+ document.getElementById("episode").textContent=(item.weekday===4?"🎉 FRIDAY REVEAL · ":item.weekday>=5?"☀️ ":"📖 ")+item.theme;
+ document.getElementById("name").textContent=duck.name;
+ document.getElementById("role").textContent=duck.role;
+ document.getElementById("title").textContent=title;
+ document.getElementById("text").textContent=story;
+ document.getElementById("clue").textContent=(item.weekday===4?"🎉 ":item.weekday>=5?"":"🔎 ")+clue;
+ dress(duck.hat);
+}
+render();
+setInterval(render,60000); // Check every minute, including across midnight.
+document.addEventListener("visibilitychange",render);
+</script>
+</body></html>
